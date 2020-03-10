@@ -1,0 +1,77 @@
+{% block table_widget %}
+    {% if items|length > 0 %}
+        <div id="field_container_{{ form.vars.id }}">
+            {% include '@SonataAdmin/CRUD/Association/edit_one_to_many.html.twig' with { 'btn_add': btn_add, 'btn_catalogue': false } %}
+            <table class="table table-bordered table-striped table-hover sonata-ba-list">
+                {% block table_header %}
+                    <thead>
+                    <tr class="sonata-ba-list-field-header">
+                        {% for label in columnsLabel %}
+                            {% apply spaceless %}
+                                <th class="sonata-ba-list-field-header">
+                                    {{ label }}
+                                </th>
+                            {% endapply %}
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                {% endblock %}
+
+                {% block table_body %}
+                    <tbody>
+                    {% for item in items %}
+                        {% apply spaceless %}
+                            <tr class="sonata-ba-list-field">
+                                {% for field in columnsName %}
+                                    {% if field == 'actions' %}
+                                        <td>
+                                            <span id="field_actions_{{ form.vars.id }}">
+                                                <a
+                                                        href="{{ sonata_admin.field_description.associationAdmin.generateUrl(
+                                                            'edit',
+                                                            sonata_admin.field_description.getOption('id', { 'id': item.id })
+                                                        ) }}"
+                                                        onclick="return start_field_dialog_form_edit_{{ form.vars.id }}(this);"
+                                                        class="btn btn-sm btn-default fa fa-pencil"
+                                                        style="margin-right: 6px"
+                                                >
+                                                </a>
+                                            </span>
+                                            <span id="field_actions_{{ form.vars.id }}">
+                                                <a
+                                                        href="{{ sonata_admin.field_description.associationAdmin.generateUrl(
+                                                            'delete',
+                                                            sonata_admin.field_description.getOption('id', { 'id': item.id })
+                                                        ) }}"
+                                                        class="btn btn-sm btn-danger fa fa-trash"
+                                                >
+                                                </a>
+                                            </span>
+                                        </td>
+                                    {% else %}
+                                        <td>{{ attribute(item, field) }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endapply %}
+                    {% endfor %}
+                    </tbody>
+
+                {% endblock %}
+            </table>
+        </div>
+    {% else %}
+        {% block no_result_content %}
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">{{ 'no_result'|trans({}, 'SonataAdminBundle') }}</span>
+                    {% include '@SonataAdmin/CRUD/Association/edit_one_to_many.html.twig' with { 'btn_add': btn_add, 'btn_catalogue': false } %}
+                </div>
+            </div>
+        {% endblock %}
+    {% endif %}
+{% endblock %}
+{% block message_widget %}
+    {{ message }}
+{% endblock %}
