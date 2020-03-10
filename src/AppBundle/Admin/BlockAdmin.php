@@ -29,10 +29,12 @@ final class BlockAdmin extends AbstractAdmin
 
         $formMapper
             ->with('Block')
-                ->add('position', NumberType::class)
-                ->add('page', ModelType::class, ['btn_add' => false])
-            ->end();
+                ->add('position', NumberType::class);
 
+        if ($this->isCurrentRoute('create')) {
+            $formMapper->add('page', ModelType::class, ['btn_add' => false, 'expanded' => true]);
+        }
+        $formMapper->end();
         if ($subject instanceof Subscription) {
             $formMapper
                 ->with('Subscription')

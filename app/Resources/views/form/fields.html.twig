@@ -62,13 +62,7 @@
         </div>
     {% else %}
         {% block no_result_content %}
-            <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">{{ 'no_result'|trans({}, 'SonataAdminBundle') }}</span>
-                    {% include '@SonataAdmin/CRUD/Association/edit_one_to_many.html.twig' with { 'btn_add': btn_add, 'btn_catalogue': false } %}
-                </div>
-            </div>
+            {% include '@SonataAdmin/CRUD/Association/edit_one_to_many.html.twig' with { 'btn_add': btn_add, 'btn_catalogue': false } %}
         {% endblock %}
     {% endif %}
 {% endblock %}

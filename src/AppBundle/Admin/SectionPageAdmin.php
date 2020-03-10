@@ -16,10 +16,12 @@ final class SectionPageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-        ->with('Add page')
-        ->add('section', ModelType::class, ['btn_add' => false])
-        ->add('page', ModelType::class, ['btn_add' => false])
-        ->add('position', NumberType::class)
+        ->with('Add page');
+        if ($this->isCurrentRoute('create')) {
+            $formMapper->add('section', ModelType::class, ['btn_add' => false, 'expanded' => true])
+                        ->add('page', ModelType::class, ['btn_add' => false, 'expanded' => true]);
+        }
+        $formMapper->add('position', NumberType::class)
         ->end();
     }
 

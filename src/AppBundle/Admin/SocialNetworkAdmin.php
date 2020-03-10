@@ -24,23 +24,25 @@ final class SocialNetworkAdmin extends AbstractAdmin
         $iconUrlHelp = '<img src="'.$fullPath.'" class="img-thumbnail rounded float-left"/>';
 
         $formMapper
-        ->with('Social Network')
-            ->add('link', UrlType::class)
-            ->add('file', FileType::class, [
-            'label' => 'Icon Url',
-            'help' => $iconUrlHelp,
-            'required' => false,
-            'constraints' => [
-                new File([
-                    'maxSize' => '1024k',
-                    'mimeTypes' => [
-                        'image/jpeg',
-                    ],
-                ])
-            ]])
-            ->add('block', EntityType::class,['class' => ExternalSocialNetworks::class])
-            ->add('position', NumberType::class)
-        ->end();
+            ->with('Social Network')
+                ->add('link', UrlType::class)
+                ->add('file', FileType::class, [
+                'label' => 'Icon Url',
+                'help' => $iconUrlHelp,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                        ],
+                    ])
+                ]]);
+        if ($this->isCurrentRoute('create')) {
+            $formMapper->add('block', EntityType::class, ['class' => ExternalSocialNetworks::class, 'expanded' => true]);
+        }
+        $formMapper->add('position', NumberType::class)
+            ->end();
     }
 
     protected function configureListFields(ListMapper $listMapper)
