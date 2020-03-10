@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Page
@@ -54,8 +55,8 @@ class Page
      */
     public function __construct()
     {
-        $this->pageSections = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->blocks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->pageSections = new ArrayCollection();
+        $this->blocks = new ArrayCollection();
     }
 
     /**
@@ -194,5 +195,26 @@ class Page
     public function getBlocks()
     {
         return $this->blocks;
+    }
+
+    public function toArray() : array {
+        $blocks = $this->blocks->getIterator();
+        $blocks->uasort(function ($a, $b) {
+            return ($a->getPosition() >= $b->getPosition()) ? 1 : -1;
+        });
+        $blocksCollection = new ArrayCollection(iterator_to_array($blocks));
+
+        $blocksResult = [];
+        foreach($blocksCollection as $Block) {
+            $blocksResult[] = $Block->toArray();
+        }
+
+        return [
+            "page" => [
+                "id" => $this->id,
+                "name" => $this->name,
+                "blocks" => $blocksResult
+            ]
+        ];
     }
 }

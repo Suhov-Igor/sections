@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * ExternalSocialNetworks
@@ -60,5 +61,24 @@ class ExternalSocialNetworks extends Block
     public function getSocialNetworks()
     {
         return $this->socialNetworks;
+    }
+
+    public function toArray() {
+        $socialNetworks = $this->socialNetworks->getIterator();
+        $socialNetworks->uasort(function ($a, $b) {
+            return ($a->getPosition() >= $b->getPosition()) ? 1 : -1;
+        });
+        $socialNetworksCollection = new ArrayCollection(iterator_to_array($socialNetworks));
+
+        $socialNetworksResult = [];
+        foreach($socialNetworksCollection as $SocialNetwork) {
+            $socialNetworksResult[] = $SocialNetwork->toArray();
+        }
+        return [
+            "name" => self::class,
+            "props" => [
+                "socialNetworks" => $socialNetworksResult,
+            ]
+        ];
     }
 }

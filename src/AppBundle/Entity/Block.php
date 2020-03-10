@@ -137,4 +137,6 @@ abstract class Block
     {
         return $this->page;
     }
+
+    abstract public function toArray();
 }

@@ -43,32 +43,20 @@ class Section
     private $sectionPages;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Page")
-     * @ORM\JoinTable(name="section_page",
-     *      joinColumns={@ORM\JoinColumn(name="section_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")}
-     *      )
-     */
-    private $pages;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
         $this->sectionPages = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->pages = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-/**
- * @return string
- */
-public function __toString()
-{
-    return $this->getName();
-}
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * Get id.
@@ -162,41 +150,5 @@ public function __toString()
     public function getSectionPages()
     {
         return $this->sectionPages;
-    }
-
-    /**
-     * Add page.
-     *
-     * @param \AppBundle\Entity\Page $page
-     *
-     * @return Section
-     */
-    public function addPage(\AppBundle\Entity\Page $page)
-    {
-        $this->pages[] = $page;
-
-        return $this;
-    }
-
-    /**
-     * Remove page.
-     *
-     * @param \AppBundle\Entity\Page $page
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removePage(\AppBundle\Entity\Page $page)
-    {
-        return $this->pages->removeElement($page);
-    }
-
-    /**
-     * Get pages.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPages()
-    {
-        return $this->pages;
     }
 }

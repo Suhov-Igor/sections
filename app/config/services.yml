@@ -38,19 +38,19 @@ services:
         class: AppBundle\Admin\SectionAdmin
         arguments: [~, AppBundle\Entity\Section, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Section, group: Section }
+            - { name: sonata.admin, manager_type: orm, label: Section }
 
     admin.page:
         class: AppBundle\Admin\PageAdmin
         arguments: [~, AppBundle\Entity\Page, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Page, group: Page }
+            - { name: sonata.admin, manager_type: orm, label: Page }
 
     admin.section.section_page:
         class: AppBundle\Admin\SectionPageAdmin
         arguments: [~, AppBundle\Entity\SectionPage, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: SectionPage, group: Section }
+            - { name: sonata.admin, manager_type: orm, label: SectionPage, show_in_dashboard: false }
 
     admin.page.block:
         class: AppBundle\Admin\BlockAdmin
@@ -58,10 +58,10 @@ services:
         calls:
             - [ setSubClasses, [{Subscription : AppBundle\Entity\Subscription, ExternalSocialNetworks: AppBundle\Entity\ExternalSocialNetworks}]]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Block, group: Page }
+            - { name: sonata.admin, manager_type: orm, label: Block, show_in_dashboard: false }
 
     admin.page.block.social_network:
         class: AppBundle\Admin\SocialNetworkAdmin
         arguments: [~, AppBundle\Entity\SocialNetwork, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: SocialNetwork, group: Page }
+            - { name: sonata.admin, manager_type: orm, label: SocialNetwork, show_in_dashboard: false }

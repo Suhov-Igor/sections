@@ -224,4 +224,14 @@ class SocialNetwork
 
        $this->setFile(null);
     }
+
+    public function toArray() {
+        return [
+            "id" => $this->id,
+            "link" => $this->link,
+            "icon" => [
+                "url" => $this->iconUrl,
+            ]
+        ];
+    }
 }

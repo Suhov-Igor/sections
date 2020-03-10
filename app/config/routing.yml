@@ -10,3 +10,8 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+
+app_page_get:
+    path: /page/{slug}
+    controller: AppBundle\Controller\PageController::get
+    methods: GET

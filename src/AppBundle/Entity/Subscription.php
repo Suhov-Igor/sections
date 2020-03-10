@@ -81,4 +81,14 @@ class Subscription extends Block
     {
         return $this->buttonTitle;
     }
+
+    public function toArray() {
+        return [
+            "name" => self::class,
+            "props" => [
+                "title" => $this->title,
+                "buttonTitle" => $this->buttonTitle,
+            ]
+        ];
+    }
 }
